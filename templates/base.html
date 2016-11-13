@@ -1,21 +1,54 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <link type="text/css" rel="stylesheet" href="/static/main.css" />
+    <head>
 
-  <title>CS 253 Blog</title>
-</head>
+        <script src="/bower_components/webcomponentsjs/webcomponents-lite.js"></script>
 
-<body>
-  <a href="/" class="main-title">
-    CS 253 Blog
-  </a>
+        <link rel="import" href="/bower_components/app-layout/app-layout.html">
+        <link rel="import" href="/bower_components/app-layout/app-scroll-effects/effects/waterfall.html">
+        <link rel="import" href="/bower_components/iron-flex-layout/iron-flex-layout.html">
+        <link type="text/css" rel="stylesheet" href="/static/main.css" />
 
-  <div id="content">
-  {% block content %}
-  {% endblock %}
-  </div>
-</body>
+        <style is="custom-style">
+          body {
+            /* No margin on body so toolbar can span the screen */
+            margin: 0;
+          }
+          app-toolbar {
+            /* Toolbar is the main header, so give it some color */
+            background-color: #1E88E5;
+            font-family: 'Roboto', Helvetica, sans-serif;
+            color: white;
+            --app-toolbar-font-size: 24px;
+             };
+          }
 
+        </style>
+
+        <title>Blog Project</title>
+    </head>
+    <body>
+        <app-header-layout>
+            <app-header fixed condenses effects="waterfall">
+                <app-toolbar>
+                    <div main-title>
+                        <a href="/">CS 253 Blog</a>
+                    </div>
+                    <div class="container flex-end-justified login-area">
+                        {% if user %}
+                          {{user.name}} | <a class="newpost-link" href="/newpost">New Post</a> (<a class="login-link" href="/logout">logout</a>)
+                        {% else %}
+                          <a class="login-link" href="/login">login</a>
+                          |
+                          <a class="login-link" href="/signup">signup</a>
+                        {% endif %}
+                    </div>
+                </app-toolbar>
+            </app-header>
+            <div id="content">
+                {% block content %}
+                {% endblock %}
+            </div>
+        </app-header-layout>
+    </body>
 </html>
-

@@ -1,0 +1,21 @@
+{
+  "name": "fullstack-course-project",
+  "homepage": "https://github.com/matthardwick/fullstack-blog",
+  "authors": [
+    "Matt Hardwick <matthardwick@gmail.com>"
+  ],
+  "description": "Multi-user blog",
+  "main": "blog.py",
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "app-layout": "PolymerElements/app-layout#^0.10.6"
+  }
+}

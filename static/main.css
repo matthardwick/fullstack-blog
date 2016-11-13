@@ -1,8 +1,10 @@
 body {
-    font-family: Helvetica, Arial, sans-serif;
-    font-size: 14px;
+    font-family: 'Roboto', Helvetica, Arial, sans-serif;
+    background-color: rgb(241, 241, 241);
+}
 
-    width: 800px;
+#content {
+    width: 90%;
     margin: 0 auto;
     padding: 10px;
     color: #333;
@@ -45,15 +47,6 @@ input[type=submit] {
   font-size: 24px;
 }
 
-.main-title {
-    display: block;
-    color: #222;
-    font-size: 40px;
-    font-weight: bold;
-    text-align: center;
-    margin-bottom: 30px;
-    text-decoration: none;
-}
 
 .post + .post {
     margin-top: 15px;
@@ -79,5 +72,35 @@ input[type=submit] {
 
 .post-content {
     margin-top: 5px;
+    overflow-wrap: break-word;
 }
 
+.app-toolbar-0 {
+
+
+}
+
+.app-toolbar-0  > [main-title],.app-toolbar-0  > [condensed-title] {
+
+}
+
+.app-toolbar-0  > [main-title] a {
+    color: white;
+    text-decoration: none;
+    pointer-events: auto;
+    padding: 10px 4%;
+}
+
+.login-area {
+    font-size: 20px;
+    padding-right: 4%;
+}
+
+.login-area a {
+    color: white;
+    text-decoration: none;
+}
+
+.login-area a.newpost-link:hover, a.login-link:hover {
+    text-decoration: underline;
+}
