@@ -1,32 +1,35 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h2>Login</h2>
-    <form method="post">
-      <table>
-        <tr>
-          <td class="label">
-            Username
-          </td>
-          <td>
-            <input type="text" name="username" value="{{username}}">
-          </td>
-        </tr>
-
-        <tr>
-          <td class="label">
-            Password
-          </td>
-          <td>
-            <input type="password" name="password" value="">
-          </td>
-        </tr>
-      </table>
-
-      <div class="error">
-        {{error}}
-      </div>
-
-      <input type="submit">
+        <style shim-shadowdom>
+        paper-button {
+        padding:0;
+        }
+        paper-button::shadow .button-content {
+        padding:0;
+        }
+        paper-button button {
+        padding:0em;
+        background-color: transparent;
+        border-color: transparent;
+        color:white;
+        size: 26px;
+        }
+        paper-button button::-moz-focus-inner {
+        border: 0;
+        }
+        </style>
+<div>
+    <form method="post" id="login_form">
+        <div class="form-group">
+            <paper-input label="username" type="text"  class="form-control" id="username" name="username" value="{{username}}">
+        </div>
+        <div class="form-group">
+            <paper-input label="password" type="password" class="form-control" id="password" name="password">
+        </div>
+        <p class="error" id="login_error"">{{login_error}}</p>
+        <paper-button raised class="green"><button type="submit">LOG IN</button></paper-button>
+        <a href="/signup">Do not have an account?</a>
     </form>
-{% endblock %}
+</div>
+{% endblock%}

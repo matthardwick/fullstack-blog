@@ -1,0 +1,107 @@
+body {
+    font-family: 'Roboto', Helvetica, Arial, sans-serif;
+    background-color: rgb(241, 241, 241);
+}
+
+#content {
+    width: 90%;
+    margin: 0 auto;
+    padding: 10px;
+    color: #333;
+}
+
+h2 {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.error {
+    color: red;
+}
+
+
+.post-content {
+    margin-top: 5px;
+    overflow-wrap: break-word;
+}
+
+
+.app-toolbar-0  > [main-title] a {
+    color: white;
+    text-decoration: none;
+    pointer-events: auto;
+    padding: 10px 4%;
+}
+
+.login-area {
+    font-size: 20px;
+    padding-right: 4%;
+}
+
+.login-area a {
+    color: white;
+    text-decoration: none;
+}
+
+.login-area a.newpost-link:hover, a.login-link:hover {
+    text-decoration: underline;
+}
+
+paper-button > button{
+    font-family: "Roboto";
+    font-size: 16px;
+    margin: 0;
+    padding: 0;
+    border: none;
+}
+
+paper-button.green {
+    background-color: green;
+    color: white;
+}
+
+paper-button.green > button {
+    background-color: green;
+    color: white;
+}
+
+paper-button.red {
+    background-color: red;
+    color: white;
+}
+
+.article-title a {
+    color: #d87c2b;
+}
+
+.post-title {
+    color: #d87c2b;
+}
+
+.article-footer p {
+    display: inline;
+}
+
+.article-footer a {
+    padding: 5px 5px 5px 0;
+    color: #228438;
+}
+
+.comments li {
+    padding-bottom: 10px;
+    border-top: 0;
+    border-right: 0;
+    border-left: 0;
+    border-bottom: 1px;
+    border-style: solid;
+    border-color: #ccc;
+}
+
+.form-group {
+    margin-top: 10px;
+}
+
+textarea {
+    margin-top: 5px;
+}

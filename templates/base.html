@@ -1,30 +1,31 @@
 <!DOCTYPE html>
 <html>
     <head>
-
-        <script src="/bower_components/webcomponentsjs/webcomponents-lite.js"></script>
+        <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1.0">
+        <meta charset="utf-8">
 
         <link rel="import" href="/bower_components/app-layout/app-layout.html">
         <link rel="import" href="/bower_components/app-layout/app-scroll-effects/effects/waterfall.html">
         <link rel="import" href="/bower_components/iron-flex-layout/iron-flex-layout.html">
-        <link type="text/css" rel="stylesheet" href="/static/main.css" />
-
+        <link rel="import" href="/bower_components/paper-input/paper-input.html">
+        <link rel="import" href="/bower_components/paper-button/paper-button.html">
+        <link type="text/css" rel="stylesheet" href="/css/main.css">
         <style is="custom-style">
-          body {
-            /* No margin on body so toolbar can span the screen */
-            margin: 0;
-          }
-          app-toolbar {
-            /* Toolbar is the main header, so give it some color */
-            background-color: #1E88E5;
-            font-family: 'Roboto', Helvetica, sans-serif;
-            color: white;
-            --app-toolbar-font-size: 24px;
-             };
-          }
-
+        body {
+        /* No margin on body so toolbar can span the screen */
+        margin: 0;
+        }
+        app-toolbar {
+        /* Toolbar is the main header, so give it some color */
+        background-color: #1E88E5;
+        font-family: 'Roboto', Helvetica, sans-serif;
+        color: white;
+        --app-toolbar-font-size: 24px;
+        };
+        }
         </style>
 
+        <script src="/bower_components/webcomponentsjs/webcomponents-lite.js"></script>
         <title>Blog Project</title>
     </head>
     <body>
@@ -32,15 +33,15 @@
             <app-header fixed condenses effects="waterfall">
                 <app-toolbar>
                     <div main-title>
-                        <a href="/">CS 253 Blog</a>
+                        <a href="/">Multi-User Blog Project</a>
                     </div>
                     <div class="container flex-end-justified login-area">
-                        {% if user %}
-                          {{user.name}} | <a class="newpost-link" href="/newpost">New Post</a> (<a class="login-link" href="/logout">logout</a>)
-                        {% else %}
-                          <a class="login-link" href="/login">login</a>
-                          |
-                          <a class="login-link" href="/signup">signup</a>
+                        {% if user: %}
+                            {{user.username}} | <a class="newpost-link" href="/newpost">New Post</a> (<a class="login-link" href="/logout">logout</a>)
+                        {% else: %}
+                            <a class="login-link" href="/login">login</a>
+                            |
+                            <a class="login-link" href="/signup">signup</a>
                         {% endif %}
                     </div>
                 </app-toolbar>

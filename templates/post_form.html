@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+
+{% block content %}
+        <style shim-shadowdom>
+        paper-button {
+        padding:0;
+        }
+        paper-button::shadow .button-content {
+        padding:0;
+        }
+        paper-button button {
+        padding:0em;
+        background-color: transparent;
+        border-color: transparent;
+        color:white;
+        size: 26px;
+        }
+        paper-button button::-moz-focus-inner {
+        border: 0;
+        }
+        </style>
+
+<h2>{{heading}}</h2>
+<form method="post">
+
+    <div class="form-group">
+        <paper-input label="subject" type="text" class="form-control" name="subject" value="{{subject}}">
+    </div>
+
+
+    <div class="form-group">
+        <label for="content">Content</label>
+        <textarea label="content" rows="15" name="content" style="width:100%"">{{content}}</textarea>
+    </div>
+
+
+    <p class="error" id="post_form_error">{{error}}</p>
+
+    <paper-button raised class="green"><button type="submit">SUBMIT</button></paper-button>
+    <a href="/" style="text-decoration: none"><paper-button raised class="red">CANCEL</paper-button></a>
+</form>
+
+{% endblock %}

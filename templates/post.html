@@ -1,15 +1,45 @@
-<div class="post">
-  <div class="post-heading">
-    <div class="post-title">
-      {{p.subject}}
+{% extends "base.html" %}
+{% block content %}
+
+<article>
+    <h1 class="post-title">{{post.subject}}</h1>
+    <div class="article-meta">
+        <p class="author">Author: {{post.author_key.get().username}}</p>
+        <p class="date">Posted on: {{post.created.strftime("%d-%m-%Y %H:%M")}}</p>
+        <div class="actions article-footer">
+            <p class="like">
+                {% if user.key in post.liked_by: %}
+                    {% set text = 'Unlike' %}
+                {% else: %}
+                    {% set text = 'Like' %}
+                {% endif %}
+                <a href="/like/{{post.key.id()}}">{{text}} <span>[{{ post.liked_by|length }} like(s)]</span></a>
+            </p>
+            <p class="comments"><a href="/newcomment/{{post.key.id()}}">Comment</a></p>
+            <p class="edit"><a href="/post/edit/{{post.key.id()}}">Edit</a></p>
+            <p class="delete"><a href="/delete/{{post.key.id()}}">Delete</a></p>
+        </div>
     </div>
 
-    <div class="post-date">
-      {{p.created.strftime("%b %d, %Y")}}
-    </div>
-  </div>
+    <p>{{post.content}}</p>
+    {% if post.comments %}
+    <hr>
+    <h3>Comments</h2>
+    <ul class="comments">
+        {% for comment in post.comments: %}
+        <li>
+            <p class="username">{{comment.key.parent().get().username}} says:</p>
+            <p class="updated-datetime">{{comment.updated.strftime("%d-%m-%Y %H:%M")}}</p>
+            <p class="content">{{comment.content}}</p>
+            <div class="article-footer">
+                <p class="edit"><a href="/editcomment/{{comment.key.id()}}">Edit</a></p>
+                <p class="edit"><a href="/deletecomment/{{comment.key.id()}}">Delete</a></p>
+            </div>
+        </li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+</article>
 
-  <div class="post-content">
-    {{p._render_text | safe}}
-  </div>
-</div>
+
+{% endblock %}
