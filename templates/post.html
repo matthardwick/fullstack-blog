@@ -4,7 +4,7 @@
         <h1 class="post-title">{{post.subject}}</h1>
         <div class="article-meta">
             <p class="author">Author: {{post.author_key.get().username}}</p>
-            <p class="date">Posted on: {{post.created.strftime("%d-%m-%Y %H:%M")}}</p>
+            <p class="date">Posted on: {{post.created.strftime("%b %d, %Y")}}</p>
             <div class="actions article-footer">
                 <p class="like">
                     {% if user.key in post.liked_by: %}
@@ -27,7 +27,7 @@
                 {% for comment in post.comments: %}
                     <li>
                         <p class="username">{{comment.key.parent().get().username}} says:</p>
-                        <p class="updated-datetime">{{comment.updated.strftime("%d-%m-%Y %H:%M")}}</p>
+                        <p class="updated-datetime">{{comment.updated.strftime("%b %d, %Y")}}</p>
                         <p class="content">{{comment.content}}</p>
                         <div class="article-footer">
                             <p class="edit"><a href="/editcomment/{{comment.key.id()}}">Edit</a></p>

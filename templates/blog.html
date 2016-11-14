@@ -6,7 +6,7 @@
                 <h1 class="article-title"><a href="/post/{{post.key.id()}}">{{post.subject}}</a></h1>
                 <div class="article-meta">
                     <p class="author">Author: {{post.author_key.get().username}}</p>
-                    <p class="date">Posted On: {{post.created.strftime("%d-%m-%Y %H:%M")}}</p>
+                    <p class="date">Posted On: {{post.created.strftime("%b %d, %Y")}}</p>
                 </div>
                 <p class="content">{{post.content}}</p>
                 <div class="article-footer">

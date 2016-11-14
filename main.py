@@ -4,9 +4,12 @@ import string
 import random
 import re
 import hmac
-import logging
-import time
+# import logging
+# import time
 import jinja2
+# import datetime
+# from pytz import timezone
+# import pytz
 from google.appengine.ext import ndb
 
 template_dir = os.path.join(os.path.dirname(__file__), 'templates')
@@ -68,8 +71,8 @@ class Post(ndb.Model):
     subject = ndb.StringProperty(required=True)
     content = ndb.TextProperty(required=True)
     author_key = ndb.KeyProperty(kind='User', required=True)
-    likes = ndb.IntegerProperty(default=0)
     liked_by = ndb.KeyProperty(kind='User', repeated=True)
+    likes = ndb.IntegerProperty()
     created = ndb.DateTimeProperty(auto_now_add=True)
     updated = ndb.DateTimeProperty(auto_now=True)
 
@@ -164,34 +167,41 @@ class EditPost(Handler):
             return
         post_id = self.get_id_from_url()
         post = Post.get_by_id(int(post_id), parent=blog_key())
-        # Get the subject and content on the Edit Form
-        new_subject = self.request.get('subject')
-        new_content = self.request.get('content')
-        if not new_subject or not new_content:
-            self.render("post_form.html",
-                        heading="Edit Post",
-                        subject=new_subject,
-                        content=new_content,
-                        previous_url=self.request.referer,
-                        error="subject and content please")
+        if not post:
+            self.error(404)
             return
-        updated = False
-        if post.subject != new_subject:
-            post.subject = new_subject
-            updated = True
-        if post.content != new_content:
-            post.content = new_content
-            updated = True
-        if updated:
-            post.put()
-        self.redirect('/post/' + post_id)
+        if post.author_key != self.user.key:
+            self.redirect('/edit/error')
+        else:
+            # Get the subject and content on the Edit Form
+            new_subject = self.request.get('subject')
+            new_content = self.request.get('content')
+            if not new_subject or not new_content:
+                self.render("post_form.html",
+                            heading="Edit Post",
+                            subject=new_subject,
+                            content=new_content,
+                            previous_url=self.request.referer,
+                            error="subject and content please")
+                return
+            updated = False
+            if post.subject != new_subject:
+                post.subject = new_subject
+                updated = True
+            if post.content != new_content:
+                post.content = new_content
+                updated = True
+            if updated:
+                post.put()
+            self.redirect('/post/' + post_id)
 
 
 class EditPostError(Handler):
 
     def get(self):
         self.render(
-            "error.html", error_message="You don't have permission to edit this post")
+            "error.html",
+            error_message="You don't have permission to edit this post")
 
 
 class DeletePost(Handler):
@@ -216,7 +226,8 @@ class DeletePostError(Handler):
 
     def get(self):
         self.render(
-            "error.html", error_message="You don't have permission to delete this post")
+            "error.html",
+            error_message="You don't have permission to delete this post")
 
 
 class LikePost(Handler):
@@ -310,7 +321,8 @@ class EditComment(Handler):
                         content=content)
         else:
             self.render(
-                "error.html", error_message="You do not have permission to edit or delete other comments")
+                "error.html",
+                error_message="You do not have permission to edit or delete other comments")
 
     def post(self):
         if not self.user:
@@ -318,6 +330,9 @@ class EditComment(Handler):
 
         comment_id = self.get_id_from_url()
         comment = Comment.get_by_id(int(comment_id), parent=self.user.key)
+        if not comment:
+            error(404)
+            return
         new_content = self.request.get('content')
         updated = False
         if new_content != comment.content:
@@ -348,7 +363,8 @@ class DeleteCommentError(Handler):
 
     def get(self):
         self.render(
-            "error.html", error_message="You don't have permission to delete this post")
+            "error.html",
+            error_message="You don't have permission to delete this post")
 
 
 def validate_username(username):
@@ -433,7 +449,6 @@ class Signup(Handler):
 
         # validate signup form
         if (validate_username(username)
-
                 and validate_password(password)
                 and compare_passwords(password, verify)
                 and validate_email(email)):
