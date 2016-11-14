@@ -408,7 +408,6 @@ def users_key(group='default'):
     return ndb.Key('users', group)
 
 
-
 class User(ndb.Model):
     username = ndb.StringProperty(required=True)
     password = ndb.StringProperty(required=True)

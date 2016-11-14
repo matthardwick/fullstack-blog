@@ -20,12 +20,10 @@ h2 {
     color: red;
 }
 
-
 .post-content {
     margin-top: 5px;
     overflow-wrap: break-word;
 }
-
 
 .app-toolbar-0  > [main-title] a {
     color: white;
@@ -44,11 +42,12 @@ h2 {
     text-decoration: none;
 }
 
-.login-area a.newpost-link:hover, a.login-link:hover {
+.login-area a.newpost-link:hover,
+a.login-link:hover {
     text-decoration: underline;
 }
 
-paper-button > button{
+paper-button > button {
     font-family: "Roboto";
     font-size: 16px;
     margin: 0;

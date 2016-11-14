@@ -1,51 +1,25 @@
 {% extends "base.html" %}
-
 {% block content %}
-        <style shim-shadowdom>
-        paper-button {
-        padding:0;
-        }
-        paper-button::shadow .button-content {
-        padding:0;
-        }
-        paper-button button {
-        padding:0em;
-        background-color: transparent;
-        border-color: transparent;
-        color:white;
-        size: 26px;
-        }
-        paper-button button::-moz-focus-inner {
-        border: 0;
-        }
-        </style>
-<div>
-
-    <form method="post" id="signup_form">
-        <div class="form-group">
-            <paper-input label="username" type="text" class="form-control" id="username" name="username" value="{{username}}">
-            <p class="error" id="username_error">{{username_error}}</p>
-        </div>
-
-        <div class="form-group">
-            <paper-input label="password" type="password" class="form-control" id="password" name="password">
-            <p class="error" id="password_error">{{password_error}}</p>
-        </div>
-
-        <div class="form-group">
-            <paper-input label="verify password" type="password" class="form-control" id="verify" name="verify">
-            <p class="error" id="verify_error">{{verify_error}}</p>
-        </div>
-
-        <div class="form-group">
-            <paper-input label="e-mail (optional)" type="text" class="form-control" id="email" name="email">
-            <p class="error" id="email_error">{{email_error}}</p>
-        </div>
-
-        <paper-button raised class="green"><button type="submit">SIGN UP</button></paper-button>
-        <a href="/login">Already have an account?</a>
-    </form>
-
-</div>
-
-{% endblock%}
+    <div>
+        <form method="post" id="signup_form">
+            <div class="form-group">
+                <paper-input label="username" type="text" class="form-control" id="username" name="username" value="{{username}}">
+                </div>
+                <p class="error" id="username_error">{{username_error}}</p>
+                <div class="form-group">
+                    <paper-input label="password" type="password" class="form-control" id="password" name="password">
+                    </div>
+                    <p class="error" id="password_error">{{password_error}}</p>
+                    <div class="form-group">
+                        <paper-input label="verify password" type="password" class="form-control" id="verify" name="verify">
+                        </div>
+                        <p class="error" id="verify_error">{{verify_error}}</p>
+                        <div class="form-group">
+                            <paper-input label="e-mail (optional)" type="text" class="form-control" id="email" name="email">
+                            </div>
+                            <p class="error" id="email_error">{{email_error}}</p>
+                        <paper-button raised class="green"><button type="submit">SIGN UP</button></paper-button>
+                        <a href="/login">Already have an account?</a>
+                    </form>
+                </div>
+            {% endblock%}
