@@ -85,6 +85,7 @@ class Comment(ndb.Model):
     content = ndb.TextProperty(required=True)
     post_key = ndb.KeyProperty(kind='Post', required=True)
     updated = ndb.DateTimeProperty(auto_now=True)
+    author = ndb.KeyProperty(kind='User', required=False)
 
 
 class MainPage(Handler):
@@ -287,6 +288,8 @@ class CommentPost(Handler):
 
         post_id = self.get_id_from_url()
         post = Post.get_by_id(int(post_id), parent=blog_key())
+        user_id = self.read_user_id()
+        author = Comment.get_by_id(int(user_id), parent=blog_key())
         if not post:
             self.render("error.html",
                         previous_url=self.request.referer,
@@ -299,8 +302,9 @@ class CommentPost(Handler):
                         previous_url=self.request.referer,
                         error="Can't leave an empty comment!")
         else:
+            author = author
             comment = Comment(
-                content=content, post_key=post.key, parent=self.user.key)
+                content=content, post_key=post.key, author=author, parent=self.user.key)
             comment.put()
             self.redirect('/post/' + str(post.key.id()))
 
@@ -313,6 +317,7 @@ class EditComment(Handler):
             return
         comment_id = self.get_id_from_url()
         comment = Comment.get_by_id(int(comment_id), parent=self.user.key)
+
         # Check if user is editing own comment
         if comment:
             content = comment.content
@@ -327,20 +332,26 @@ class EditComment(Handler):
     def post(self):
         if not self.user:
             self.redirect('/login')
+            return
 
         comment_id = self.get_id_from_url()
         comment = Comment.get_by_id(int(comment_id), parent=self.user.key)
         if not comment:
             error(404)
             return
-        new_content = self.request.get('content')
-        updated = False
-        if new_content != comment.content:
-            updated = True
-            comment.content = new_content
-        if updated:
-            comment.put()
-        self.redirect('/post/' + str(comment.post_key.id()))
+        if comment.author != self.user.key:
+            new_content = self.request.get('content')
+            updated = False
+            if new_content != comment.content:
+                updated = True
+                comment.content = new_content
+            if updated:
+                comment.put()
+            self.redirect('/post/' + str(comment.post_key.id()))
+        else:
+            self.render(
+                "error.html",
+                error_message="You do not have permission to edit or delete other comments")
 
 
 class DeleteComment(Handler):
@@ -357,6 +368,19 @@ class DeleteComment(Handler):
         else:
             comment.key.delete()
             self.redirect(self.request.referer)
+
+    def post(self):
+        if not self.user:
+            self.redirect('/login')
+            return
+        comment_id = self.get_id_from_url()
+        comment = Comment.get_by_id(int(comment_id), parent=self.user.key)
+        if comment.author != self.user.key:
+            self.redirect('/deletecomment/error')
+        else:
+            comment.key.delete()
+            self.redirect(self.request.referer)
+
 
 
 class DeleteCommentError(Handler):
