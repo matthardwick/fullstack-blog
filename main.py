@@ -71,8 +71,8 @@ class Post(ndb.Model):
     subject = ndb.StringProperty(required=True)
     content = ndb.TextProperty(required=True)
     author_key = ndb.KeyProperty(kind='User', required=True)
+    likes = ndb.IntegerProperty(default=0)
     liked_by = ndb.KeyProperty(kind='User', repeated=True)
-    likes = ndb.IntegerProperty()
     created = ndb.DateTimeProperty(auto_now_add=True)
     updated = ndb.DateTimeProperty(auto_now=True)
 
@@ -164,8 +164,8 @@ class EditPost(Handler):
 
     def post(self):
         if not self.user:
-            self.redirect('/login')
-            return
+            return self.redirect('/login')
+
         post_id = self.get_id_from_url()
         post = Post.get_by_id(int(post_id), parent=blog_key())
         if not post:
@@ -240,6 +240,7 @@ class LikePost(Handler):
 
         post_id = self.get_id_from_url()
         post = Post.get_by_id(int(post_id), parent=blog_key())
+        post.likes = 0
         if not post:
             error(404)
             return
